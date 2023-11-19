@@ -26,7 +26,8 @@ import axios from "axios";
 const Navbar = ({ children }) => {
   const navigate = useNavigate();
   const [searchkey, SetSearchKey] = useState(" ");
-  const [wishlength,setWishLength]=useState(0)
+  const wishlength= sessionStorage.getItem("wishlength");
+
   const logOut = () => {
     const logout = localStorage.removeItem("AuthToken");
     navigate("/");
@@ -47,7 +48,7 @@ const Navbar = ({ children }) => {
       const token=localStorage.getItem("AuthToken");
       const {data,status}=await axios.post(`${url}/product/get-wishlist`,{token})
       if(status === 200){
-        setWishLength(data.data.length)
+        sessionStorage.setItem("wishlength", data.data.length);
       }
     } catch (error) {
       console.log(error);
@@ -73,7 +74,7 @@ const Navbar = ({ children }) => {
           <Box ml={5}>
             <Image
               src={Unlimited}
-              width={"200px"}
+              width={"150px"}
               height={"50px"}
               onClick={() => navigate("/homepage")}
             />
@@ -87,7 +88,7 @@ const Navbar = ({ children }) => {
             }}
           >
             <HStack spacing={"30px"}>
-              <Box>
+              <Box className="side-search">
                 <form onSubmit={handleSubmit}>
                   <InputGroup borderRadius={5} size="sm">
                     <InputLeftElement

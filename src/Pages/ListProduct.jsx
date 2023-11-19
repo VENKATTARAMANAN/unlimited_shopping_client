@@ -18,16 +18,20 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Rate } from "antd";
+import { Spin } from "antd";
 
 const ListProduct = () => {
   let params = useParams();
   let seardata = params.id.trim();
   const [filtereddata, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const searchProd = async () => {
     try {
+      setLoading(true)
       setFilteredData([]);
       const { data, status } = await axios.get(`${url}/product/alldata`);
       if (status === 200) {
+        setLoading(false)
         if (seardata === "all") {
           setFilteredData(data.data);
         } else {
@@ -45,11 +49,13 @@ const ListProduct = () => {
 
   const handleChange = async (checkedValues) => {
     try {
+      setLoading(true)
       setFilteredData([]);
       const { data, status } = await axios.post(`${url}/product/srh-fil-cat`, {
         checkval: checkedValues,
       });
       if (status === 200) {
+        setLoading(false)
         setFilteredData(data.data);
       }
     } catch (error) {
@@ -59,11 +65,13 @@ const ListProduct = () => {
 
   const starRating = async (checkedValues) => {
     try {
+      setLoading(true)
       setFilteredData([]);
       const { data, status } = await axios.post(`${url}/product/star-rating`, {
         checkval: checkedValues,
       });
       if (status === 200) {
+        setLoading(false)
         setFilteredData(data.data);
       }
     } catch (error) {
@@ -73,11 +81,13 @@ const ListProduct = () => {
 
   const brandfilter = async (checkedValues) => {
     try {
+      setLoading(true)
       setFilteredData([]);
       const { data, status } = await axios.post(`${url}/product/brand-filter`, {
         checkval: checkedValues,
       });
       if (status === 200) {
+        setLoading(false)
         setFilteredData(data.data);
       }
     } catch (error) {
@@ -92,9 +102,10 @@ const ListProduct = () => {
 
   return (
     <>
+    <Spin spinning={loading} size="large">
       <Navbar>
         <Box className="list-prod">
-          <Box>
+          <Box className="side-search">
             <Box style={{ width: "250px", margin: "10px" }}>
               <Text style={{ fontWeight: "Bold" }}>Search/Filters</Text>
               <hr />
@@ -177,6 +188,7 @@ const ListProduct = () => {
         </Box>
       </Navbar>
       <Footer />
+      </Spin>
     </>
   );
 };

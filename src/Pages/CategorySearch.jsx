@@ -69,7 +69,7 @@ const starRating = async (checkedValues) => {
     <>
       <Navbar>
         <Box className="list-prod">
-          <Box>
+          <Box className="side-search">
           <Box style={{ width: "250px", margin: "10px" }}>
         <Text style={{ fontWeight: "Bold" }}>Search/Filters</Text>
         <hr />

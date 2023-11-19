@@ -13,7 +13,6 @@ const AccMailVer = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
-  console.log(param);
   const getData = async () => {
     try {
       setLoading(true);

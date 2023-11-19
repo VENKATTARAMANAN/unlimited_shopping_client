@@ -24,12 +24,14 @@ import { useState } from "react";
 import { Rate } from "antd";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import CategoryList from "../Components/CategoryList";
+import { Spin } from "antd";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const [prodata, setProData] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [loading, setLoading] = useState(false);
   const contentStyle = {
     height: "300px",
     width: "100%",
@@ -40,37 +42,19 @@ const HomePage = () => {
   };
   const token = localStorage.getItem("AuthToken");
 
-  const addWishlist = async (val) => {
-    try {
-      const { data, status } = await axios.post(`${url}/product/add-wishlist`, {
-        data: val,
-        token: token,
-      });
-      if (status === 200) {
-        getWishlist();
-        toast({
-          description: data.data,
-          status: "success",
-          duration: 1500,
-          position: "top-right",
-          isClosable: true,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   // ---------------get wishlist data ------------------
 
   const getWishlist = async () => {
     try {
+      setLoading(true)
       const { data, status } = await axios.post(
         `${url}/product/get-wishlist`,
        {token}
       );
       if (status === 200) {
+        setLoading(false)
         setWishlist(data.data);
+        sessionStorage.setItem("wishlength", data.data.length);
       }
     } catch (error) {
       console.log(error);
@@ -85,8 +69,10 @@ const HomePage = () => {
 
   const getAllProductData = async () => {
     try {
+      setLoading(true)
       const { data, status } = await axios.get(`${url}/product/alldata`);
       if (status === 200) {
+        setLoading(false)
         setProData(data.data);
       }
     } catch (error) {
@@ -99,6 +85,7 @@ const HomePage = () => {
 
   const handleAddorRemovewishlist = async (prodData) => {
     try {
+      setLoading(true)
       if(wishlistIds?.includes(prodData._id)) {
         const {data, status} = await axios.delete(`${url}/product/remove-wishlist/${prodData._id}`, {
           headers: {
@@ -106,6 +93,7 @@ const HomePage = () => {
           }
         });
         if(status === 200) {
+          setLoading(false)
           getAllProductData();
           toast({
             description: data.data,
@@ -116,12 +104,13 @@ const HomePage = () => {
           });
         }
       } else {
+        setLoading(true)
         const { data, status } = await axios.post(`${url}/product/add-wishlist`, {
           data: prodData,
           token: token,
         });
         if (status === 200) {
-          getAllProductData();
+          setLoading(false)
           toast({
             description: data.data,
             status: "success",
@@ -146,6 +135,7 @@ const HomePage = () => {
 
   return (
     <>
+     <Spin spinning={loading} size="xl">
       <Navbar>
         <CategoryList />
         <Box>
@@ -244,9 +234,11 @@ const HomePage = () => {
                 </Text>
                 <Box onClick={() => handleAddorRemovewishlist(data)}>
                   {wishlistIds?.includes(data._id) ? (
-                    <HeartFilled style={{ color: "red", cursor: "pointer" }} />
+                    <Tooltip label="Remove from wishlist">
+                    <HeartFilled style={{ color: "red", cursor: "pointer",fontSize:"30px"}} /></Tooltip>
                   ) : (
-                    <HeartOutlined cursor={"pointer"} />
+                    <Tooltip label="Add to wishlist">
+                    <HeartOutlined cursor={"pointer"} style={{fontSize:"30px"}} /></Tooltip>
                   )}
                 </Box>
               </HStack>
@@ -255,6 +247,7 @@ const HomePage = () => {
         </Box>
       </Navbar>
       <Footer />
+      </Spin>
     </>
   );
 };

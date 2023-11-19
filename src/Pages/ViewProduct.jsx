@@ -16,17 +16,21 @@ import { url } from "../Api/Api";
 import { useState } from "react";
 import { Rate } from "antd";
 import CategoryList from "../Components/CategoryList";
+import { Spin } from "antd";
 
 const ViewProduct = () => {
   const params = useParams();
   const [data, setData] = useState({});
   const [previewImg, setPreviewImg] = useState();
+  const [loading, setLoading] = useState(false);
   const getProductData = async () => {
     try {
+      setLoading(true)
       const { data, status } = await axios.get(
         `${url}/product/get-product/${params.id}`
       );
       if (status === 200) {
+        setLoading(false)
         setData(data.data);
         setPreviewImg(data.data.image1);
       }
@@ -42,6 +46,7 @@ const ViewProduct = () => {
   console.log(data);
   return (
     <>
+    <Spin spinning={loading} size="large">
       <Navbar>
        <CategoryList/>
         <Box className="product-page">
@@ -122,6 +127,7 @@ const ViewProduct = () => {
         </Box>
       </Navbar>
       <Footer />
+      </Spin>
     </>
   );
 };
