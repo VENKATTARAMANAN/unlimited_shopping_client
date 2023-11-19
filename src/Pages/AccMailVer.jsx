@@ -13,11 +13,12 @@ const AccMailVer = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
+  console.log(param);
   const getData = async () => {
     try {
       setLoading(true);
       const { data, status } = await axios.post(
-        `${url}/user//acc-email-verfy`,
+        `${url}/user/acc-email-verify`,
         param
       );
       if (status === 200) {
