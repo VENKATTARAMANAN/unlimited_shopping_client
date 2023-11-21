@@ -1,9 +1,7 @@
 import { Box, HStack, Text } from "@chakra-ui/react";
-import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { url } from "../Api/Api";
 import { useNavigate } from "react-router-dom";
 
 const CategoryList = () => {
@@ -32,6 +30,7 @@ const navigate=useNavigate();
           <Text onClick={() => setCategory("watches")}>Watches</Text>
           <Text onClick={() => setCategory("clothes")}>Clothes</Text>
           <Text onClick={() => setCategory("cameras")}>Cameras</Text>
+          <Text onClick={() => setCategory("others")}>Others</Text>
         </HStack>
       </Box>
     </>

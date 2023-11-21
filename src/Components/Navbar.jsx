@@ -22,11 +22,13 @@ import { Badge } from "antd";
 import { useState } from "react";
 import { url } from "../Api/Api";
 import axios from "axios";
+import Wishlist from "../Pages/Wishlist";
 
 const Navbar = ({ children }) => {
   const navigate = useNavigate();
   const [searchkey, SetSearchKey] = useState(" ");
   const wishlength= sessionStorage.getItem("wishlength");
+  const [show,setShow]=useState(children[0]);
 
   const logOut = () => {
     const logout = localStorage.removeItem("AuthToken");
@@ -48,6 +50,7 @@ const Navbar = ({ children }) => {
       const token=localStorage.getItem("AuthToken");
       const {data,status}=await axios.post(`${url}/product/get-wishlist`,{token})
       if(status === 200){
+        const value=data.data;
         sessionStorage.setItem("wishlength", data.data.length);
       }
     } catch (error) {
@@ -55,9 +58,15 @@ const Navbar = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    getWishlistdata();
-  }, []);
+  // useEffect(() => {
+  //   getWishlistdata();
+  // }, []);
+
+  useEffect(()=>{
+    if(show !== false){
+      getWishlistdata();
+    }
+  },[show])
 
   return (
     <>
@@ -117,9 +126,9 @@ const Navbar = ({ children }) => {
                   </InputGroup>
                 </form>
               </Box>
-              <Box>
+              {show ?<HStack spacing={5}> <Box>
                 <Badge count={wishlength} overflowCount={999}>
-                  <HeartOutlined style={{ fontSize: "30px", color: "white" }} />
+                  <HeartOutlined style={{ fontSize: "30px", color: "white" }} onClick={()=>navigate("/wishlist")}/>
                 </Badge>
               </Box>
               <Box>
@@ -128,7 +137,7 @@ const Navbar = ({ children }) => {
                     style={{ fontSize: "30px", color: "white" }}
                   />
                 </Badge>
-              </Box>
+              </Box></HStack> : <></>}
               <Box>
                 <Menu>
                   <MenuButton>

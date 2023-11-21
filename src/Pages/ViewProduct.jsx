@@ -43,12 +43,14 @@ const ViewProduct = () => {
     getProductData();
   }, []);
 
-  console.log(data);
   return (
     <>
     <Spin spinning={loading} size="large">
       <Navbar>
+        {true}
+        <Box className="side-search">
        <CategoryList/>
+       </Box>
         <Box className="product-page">
           <Box>
             {/* ----------- Image preview start ----------- */}

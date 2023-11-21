@@ -46,13 +46,11 @@ const HomePage = () => {
 
   const getWishlist = async () => {
     try {
-      setLoading(true)
       const { data, status } = await axios.post(
         `${url}/product/get-wishlist`,
        {token}
       );
       if (status === 200) {
-        setLoading(false)
         setWishlist(data.data);
         sessionStorage.setItem("wishlength", data.data.length);
       }
@@ -137,7 +135,10 @@ const HomePage = () => {
     <>
      <Spin spinning={loading} size="xl">
       <Navbar>
+        {true}
+        <Box className="side-search">
         <CategoryList />
+        </Box>
         <Box>
           <Carousel autoplay>
             <div>

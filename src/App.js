@@ -10,6 +10,7 @@ import AccMailVer from "./Pages/AccMailVer";
 import ViewProduct from "./Pages/ViewProduct";
 import ListProduct from "./Pages/ListProduct";
 import CategorySearch from "./Pages/CategorySearch";
+import Wishlist from "./Pages/Wishlist";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
       <Route path="/view-product/:id" element={<ViewProduct/>}   />
       <Route path="/list-product/:id" element={<ListProduct/>} />
       <Route path="/category-search/:id" element={<CategorySearch/>}/>
-      
+      <Route path="/wishlist" element={<Wishlist/>}/>
     </Routes>
   );
 }
