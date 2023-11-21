@@ -55,7 +55,7 @@ const ForgotPassVerifyEmail = () => {
           setLoading(false);
           toast({
             description: error.response.data.data,
-            status: "success",
+            status: "error",
             duration: 1500,
             position: "top-right",
             isClosable: true,

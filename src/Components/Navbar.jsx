@@ -135,6 +135,7 @@ const Navbar = ({ children }) => {
                 <Badge count={1} overflowCount={999}>
                   <ShoppingCartOutlined
                     style={{ fontSize: "30px", color: "white" }}
+                    onClick={()=>navigate("/cartpage")}
                   />
                 </Badge>
               </Box></HStack> : <></>}
