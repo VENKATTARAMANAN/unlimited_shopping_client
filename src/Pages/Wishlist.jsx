@@ -11,10 +11,14 @@ import {
   HStack,
   Heading,
   Image,
+  Text,
   useToast,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import loginlottie from "../assets/nodata.json";
+import Lottie from "lottie-react";
+
 
 const Wishlist = () => {
   const [data, setData] = useState([]);
@@ -66,14 +70,26 @@ const Wishlist = () => {
     <>
       <Navbar>
         {false}
-        <Box
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-        >
-          {data.map((data, index) => (
+       
+          {data.length === 0 ? 
+          <Box style={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
+            <Lottie
+              style={{ height: "350px" }}
+              animationData={loginlottie}
+              loop={true}
+            />
+            <Text style={{fontSize:"30px",fontWeight:"bold"}}>No WishList Available</Text>
+          </Box>
+          
+            : 
+            <Box
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            {data.map((data, index) => (
             <Box
               key={index}
               style={{
@@ -114,8 +130,11 @@ const Wishlist = () => {
                 </HStack>
               </Center>
             </Box>
+             
           ))}
-        </Box>
+          </Box>
+          }
+       
       </Navbar>
       <Footer />
     </>
