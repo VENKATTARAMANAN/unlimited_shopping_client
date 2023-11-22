@@ -1,19 +1,24 @@
 import React from "react";
 import Navbar from "../Components/Navbar";
-import { Box } from "@chakra-ui/react";
-import { TimePicker } from "antd";
-const format = "HH:mm";
+import { Box, Text } from "@chakra-ui/react";
+import emptycart from "../assets/emptycart.json";
+import Lottie from "lottie-react";
 
 const CartPage = () => {
-    const onChange = (time, timeString) => {
-        console.log( timeString);
-      };
+   
   return (
     <>
       <Navbar>
-        {true}
+        {false}
         <Box>
-        <TimePicker use12Hours format="h:mm a" onChange={onChange} />
+        <Box style={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
+            <Lottie
+              style={{ height: "350px" }}
+              animationData={emptycart}
+              loop={true}
+            />
+            <Text style={{fontSize:"30px",fontWeight:"bold"}}>Your Cart is Empty</Text>
+          </Box>
         </Box>
       </Navbar>
     </>
