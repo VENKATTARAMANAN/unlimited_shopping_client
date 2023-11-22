@@ -3,6 +3,7 @@ import Navbar from "../Components/Navbar";
 import { Box, Text } from "@chakra-ui/react";
 import emptycart from "../assets/emptycart.json";
 import Lottie from "lottie-react";
+import Footer from "../Components/Footer";
 
 const CartPage = () => {
    
@@ -21,6 +22,7 @@ const CartPage = () => {
           </Box>
         </Box>
       </Navbar>
+      <Footer/>
     </>
   );
 };
