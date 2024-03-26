@@ -9,7 +9,6 @@ import image4 from "../assets/image4.jpg";
 import image5 from "../assets/image5.jpg";
 import {
   Box,
-  Button,
   HStack,
   Heading,
   Image,
@@ -25,9 +24,12 @@ import { Rate } from "antd";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import CategoryList from "../Components/CategoryList";
 import { Spin } from "antd";
+import { useSelector, useDispatch } from 'react-redux'
+import { Add_Wishlist } from "../Redux/Slices/getWishlist";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const dispatch=useDispatch();
   const toast = useToast();
   const [prodata, setProData] = useState([]);
   const [wishlist, setWishlist] = useState([]);
@@ -52,6 +54,7 @@ const HomePage = () => {
       );
       if (status === 200) {
         setWishlist(data.data);
+    dispatch(Add_Wishlist(data.data))
         sessionStorage.setItem("wishlength", data.data.length);
       }
     } catch (error) {

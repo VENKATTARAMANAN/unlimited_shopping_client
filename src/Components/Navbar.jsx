@@ -22,14 +22,16 @@ import { Badge } from "antd";
 import { useState } from "react";
 import { url } from "../Api/Api";
 import axios from "axios";
-import Wishlist from "../Pages/Wishlist";
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_TO_CART, RESET_CART } from "../Redux/Slices/pizzaSlice";
 
 const Navbar = ({ children }) => {
   const navigate = useNavigate();
   const [searchkey, SetSearchKey] = useState(" ");
-  const wishlength= sessionStorage.getItem("wishlength");
   const [show,setShow]=useState(children[0]);
-
+const value=useSelector((state)=>state.wishlist.value)
+const cartvalue=useSelector((state)=>state.cartArr.cart)
+console.log(cartvalue);
   const logOut = () => {
     const logout = localStorage.removeItem("AuthToken");
     navigate("/");
@@ -44,29 +46,6 @@ const Navbar = ({ children }) => {
       SetSearchKey(" ");
     }
   };
-
-  const getWishlistdata = async () => {
-    try {
-      const token=localStorage.getItem("AuthToken");
-      const {data,status}=await axios.post(`${url}/product/get-wishlist`,{token})
-      if(status === 200){
-        const value=data.data;
-        sessionStorage.setItem("wishlength", data.data.length);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // useEffect(() => {
-  //   getWishlistdata();
-  // }, []);
-
-  useEffect(()=>{
-    if(show !== false){
-      getWishlistdata();
-    }
-  },[show])
 
   return (
     <>
@@ -127,12 +106,12 @@ const Navbar = ({ children }) => {
                 </form>
               </Box>
               {show ?<HStack spacing={5}> <Box>
-                <Badge count={wishlength} overflowCount={999}>
+                <Badge count={value.length} overflowCount={999}>
                   <HeartOutlined style={{ fontSize: "30px", color: "white" }} onClick={()=>navigate("/wishlist")}/>
                 </Badge>
               </Box>
               <Box>
-                <Badge count={1} overflowCount={999}>
+                <Badge count={cartvalue.length} overflowCount={999}>
                   <ShoppingCartOutlined
                     style={{ fontSize: "30px", color: "white" }}
                     onClick={()=>navigate("/cartpage")}

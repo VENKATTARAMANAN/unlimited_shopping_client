@@ -32,8 +32,8 @@ const Login = () => {
   const { values, handleBlur, handleChange, handleSubmit, touched, errors } =
     useFormik({
       initialValues: {
-        email: "",
-        password: "",
+        email: "admin457@gmail.com",
+        password: "123456789",
       },
       validationSchema: formvalidate,
       onSubmit: async () => {

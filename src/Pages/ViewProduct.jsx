@@ -17,12 +17,15 @@ import { useState } from "react";
 import { Rate } from "antd";
 import CategoryList from "../Components/CategoryList";
 import { Spin } from "antd";
+import { useDispatch } from "react-redux";
+import { ADD_TO_CART } from "../Redux/Slices/pizzaSlice";
 
 const ViewProduct = () => {
   const params = useParams();
   const [data, setData] = useState({});
   const [previewImg, setPreviewImg] = useState();
   const [loading, setLoading] = useState(false);
+  const dispatch=useDispatch();
   const getProductData = async () => {
     try {
       setLoading(true)
@@ -121,6 +124,7 @@ const ViewProduct = () => {
                   color: "#000",
                   fontWeight: "bold",
                 }}
+                onClick={()=>dispatch(ADD_TO_CART(data))}
               >
                 Add to Cart
               </Button>

@@ -16,6 +16,7 @@ import { url } from "../Api/Api";
 import { useState } from "react";
 import { Rate } from "antd";
 import { Spin } from "antd";
+import { Pagination } from 'antd';
 
 const CategorySearch = () => {
   const params = useParams();
@@ -103,7 +104,6 @@ setProductData(backupdata);
   };
 
   const brandfilter = async (checkedValues) => {
-    console.log(checkedValues);
     try {
       setLoading(true);
       setProductData([]);
@@ -210,6 +210,7 @@ setProductData(backupdata);
                     </Box>
                   </HStack>
                 ))}
+              
               </Box>
             </Box>
           </Box>
